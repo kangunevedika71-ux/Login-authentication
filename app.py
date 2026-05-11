@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash,check_password_hash
 from urllib.parse import urlparse
 from datetime import timedelta
+import os 
 db = SQLAlchemy()
 login_manager = LoginManager()
 
@@ -24,7 +25,7 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'ved-secret-key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///app.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///app.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=15)
 
